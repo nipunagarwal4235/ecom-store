@@ -8,13 +8,12 @@ export function fetchAllProducts() {
 }
 
 export function fetchProductById(id) {
-  return new Promise(async (resolve) =>{
+  return new Promise(async (resolve) => {
     //TODO: we will not hard-code server URL here
-    const response = await fetch('http://localhost:8080/products?id='+id) 
-    const data = await response.json()
-    resolve({data})
-  }
-  );
+    const response = await fetch("http://localhost:8080/products?id=" + id);
+    const data = await response.json();
+    resolve({ data });
+  });
 }
 
 export function fetchProductsByFilters(filter, sort, pagination) {
@@ -49,24 +48,22 @@ export function fetchProductsByFilters(filter, sort, pagination) {
     const products = data.data;
     const totalItems = data.items;
 
-    resolve({data: {products:products, totalItems:totalItems}})
+    resolve({ data: { products: products, totalItems: totalItems } });
   });
 }
 
 export function fetchCategories() {
-  return new Promise(async (resolve) =>{
-    const response = await fetch('http://localhost:8080/categories') 
-    const data = await response.json()
-    resolve({data})
-  }
-  );
+  return new Promise(async (resolve) => {
+    const response = await fetch("http://localhost:8080/categories");
+    const data = await response.json();
+    resolve({ data });
+  });
 }
 
 export function fetchBrands() {
-  return new Promise(async (resolve) =>{
-    const response = await fetch('http://localhost:8080/brands') 
-    const data = await response.json()
-    resolve({data})
-  }
-  );
+  return new Promise(async (resolve) => {
+    const response = await fetch("http://localhost:8080/brands");
+    const data = await response.json();
+    resolve({ data });
+  });
 }

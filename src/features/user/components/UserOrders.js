@@ -1,6 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { fetchLoggedInUserOrderAsync, selectUserInfo, selectUserOrders } from '../userSlice';
+import {
+  fetchLoggedInUserOrderAsync,
+  selectUserInfo,
+  selectUserOrders,
+} from "../userSlice";
 
 export default function UserOrders() {
   const dispatch = useDispatch();
@@ -9,11 +13,10 @@ export default function UserOrders() {
 
   useEffect(() => {
     dispatch(fetchLoggedInUserOrderAsync(user.id));
-  }, []);
+  }, [dispatch, user]);
 
   return (
     <div>
-
       {orders &&
         orders.map((order) => (
           <div key={order.id}>
@@ -27,7 +30,7 @@ export default function UserOrders() {
                     Order Status : {order.status}
                   </h3>
                   <div className="flow-root">
-                    <ul role="list" className="-my-6 divide-y divide-gray-200">
+                    <ul className="-my-6 divide-y divide-gray-200">
                       {order.items.map((item, index) => (
                         <>
                           <li key={item[0].id} className="flex py-6">
@@ -43,13 +46,9 @@ export default function UserOrders() {
                               <div>
                                 <div className="flex justify-between text-base font-medium text-gray-900">
                                   <h3>
-                                    <a href={item.href}>
-                                      {item[0].title}
-                                    </a>
+                                    <a href={item.href}>{item[0].title}</a>
                                   </h3>
-                                  <p className="ml-4">
-                                    ${item[0].price}
-                                  </p>
+                                  <p className="ml-4">${item[0].price}</p>
                                 </div>
                                 <p className="mt-1 text-sm text-gray-500">
                                   {item[0].brand}

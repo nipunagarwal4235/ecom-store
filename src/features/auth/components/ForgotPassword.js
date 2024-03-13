@@ -1,6 +1,4 @@
-import React, { useState } from "react";
-import { Link, Navigate } from "react-router-dom";
-import { checkUserAsync } from "../authSlice";
+import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
 export default function ForgotPassword() {
@@ -9,8 +7,6 @@ export default function ForgotPassword() {
     handleSubmit,
     formState: { errors },
   } = useForm();
-
-  console.log(errors);
 
   return (
     <>
@@ -30,7 +26,6 @@ export default function ForgotPassword() {
           <form
             noValidate
             onSubmit={handleSubmit((data) => {
-              console.log(data);
               // TODO : implementation on backend with email
             })}
             className="space-y-6"
