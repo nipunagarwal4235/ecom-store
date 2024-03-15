@@ -23,7 +23,6 @@ export const counterSlice = createSlice({
     },
   },
 
-  
   extraReducers: (builder) => {
     builder
       .addCase(incrementAsync.pending, (state) => {

@@ -5,14 +5,12 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   fetchProductByIdAsync,
   selectProductById,
-  selectProductListStatus,
-} from "../productSlice";
+} from "../../product/productSlice";
 import { useParams } from "react-router-dom";
-import { addToCartAsync, selectItems } from "../../cart/cartSlice";
+import { addToCartAsync } from "../../cart/cartSlice";
 import { selectLoggedInUser } from "../../auth/authSlice";
 import { discountedPrice } from "../../../app/constants";
-import { useAlert } from "react-alert";
-import { Grid } from "react-loader-spinner";
+
 // TODO: In server data we will add colors, sizes , highlights. to each product
 
 const colors = [
@@ -42,32 +40,21 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function ProductDetail() {
+// TODO : Loading UI
+
+export default function AdminProductDetail() {
   const [selectedColor, setSelectedColor] = useState(colors[0]);
   const [selectedSize, setSelectedSize] = useState(sizes[2]);
-  const product = useSelector(selectProductById);
   const user = useSelector(selectLoggedInUser);
+  const product = useSelector(selectProductById);
   const dispatch = useDispatch();
   const params = useParams();
-  const items = useSelector(selectItems);
-  const alert = useAlert();
-  const status = useSelector(selectProductListStatus);
 
   const handleCart = (e) => {
     e.preventDefault();
-    if (items.findIndex((item) => item.product.id === product.id) < 0) {
-      const newItem = {
-        ...product,
-        product: product.id,
-        quantity: 1,
-        user: user.id,
-      };
-      dispatch(addToCartAsync(newItem));
-      // TODO: it will be based on server response of backend
-      alert.success("Item added to Cart");
-    } else {
-      alert.error("Item Already added");
-    }
+    const newItem = { ...product, quantity: 1, user: user.id };
+    delete newItem["id"];
+    dispatch(addToCartAsync(newItem));
   };
 
   useEffect(() => {
@@ -76,18 +63,6 @@ export default function ProductDetail() {
 
   return (
     <div className="bg-white">
-      {status === "loading" ? (
-        <Grid
-          height="80"
-          width="80"
-          color="rgb(79, 70, 229) "
-          ariaLabel="grid-loading"
-          radius="12.5"
-          wrapperStyle={{}}
-          wrapperClass=""
-          visible={true}
-        />
-      ) : null}
       {product && (
         <div className="pt-6">
           <nav aria-label="Breadcrumb">
@@ -189,9 +164,9 @@ export default function ProductDetail() {
                         key={rating}
                         className={classNames(
                           product.rating > rating
-                            ? 'text-gray-900'
-                            : 'text-gray-200',
-                          'h-5 w-5 flex-shrink-0'
+                            ? "text-gray-900"
+                            : "text-gray-200",
+                          "h-5 w-5 flex-shrink-0"
                         )}
                         aria-hidden="true"
                       />
@@ -222,9 +197,9 @@ export default function ProductDetail() {
                           className={({ active, checked }) =>
                             classNames(
                               color.selectedClass,
-                              active && checked ? 'ring ring-offset-1' : '',
-                              !active && checked ? 'ring-2' : '',
-                              'relative -m-0.5 flex cursor-pointer items-center justify-center rounded-full p-0.5 focus:outline-none'
+                              active && checked ? "ring ring-offset-1" : "",
+                              !active && checked ? "ring-2" : "",
+                              "relative -m-0.5 flex cursor-pointer items-center justify-center rounded-full p-0.5 focus:outline-none"
                             )
                           }
                         >
@@ -235,7 +210,7 @@ export default function ProductDetail() {
                             aria-hidden="true"
                             className={classNames(
                               color.class,
-                              'h-8 w-8 rounded-full border border-black border-opacity-10'
+                              "h-8 w-8 rounded-full border border-black border-opacity-10"
                             )}
                           />
                         </RadioGroup.Option>
@@ -273,10 +248,10 @@ export default function ProductDetail() {
                           className={({ active }) =>
                             classNames(
                               size.inStock
-                                ? 'cursor-pointer bg-white text-gray-900 shadow-sm'
-                                : 'cursor-not-allowed bg-gray-50 text-gray-200',
-                              active ? 'ring-2 ring-indigo-500' : '',
-                              'group relative flex items-center justify-center rounded-md border py-3 px-4 text-sm font-medium uppercase hover:bg-gray-50 focus:outline-none sm:flex-1 sm:py-6'
+                                ? "cursor-pointer bg-white text-gray-900 shadow-sm"
+                                : "cursor-not-allowed bg-gray-50 text-gray-200",
+                              active ? "ring-2 ring-indigo-500" : "",
+                              "group relative flex items-center justify-center rounded-md border py-3 px-4 text-sm font-medium uppercase hover:bg-gray-50 focus:outline-none sm:flex-1 sm:py-6"
                             )
                           }
                         >
@@ -288,11 +263,11 @@ export default function ProductDetail() {
                               {size.inStock ? (
                                 <span
                                   className={classNames(
-                                    active ? 'border' : 'border-2',
+                                    active ? "border" : "border-2",
                                     checked
-                                      ? 'border-indigo-500'
-                                      : 'border-transparent',
-                                    'pointer-events-none absolute -inset-px rounded-md'
+                                      ? "border-indigo-500"
+                                      : "border-transparent",
+                                    "pointer-events-none absolute -inset-px rounded-md"
                                   )}
                                   aria-hidden="true"
                                 />
