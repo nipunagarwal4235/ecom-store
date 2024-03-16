@@ -46,7 +46,6 @@ export default function ProductDetail() {
   const [selectedColor, setSelectedColor] = useState(colors[0]);
   const [selectedSize, setSelectedSize] = useState(sizes[2]);
   const product = useSelector(selectProductById);
-  const user = useSelector(selectLoggedInUser);
   const dispatch = useDispatch();
   const params = useParams();
   const items = useSelector(selectItems);
@@ -59,8 +58,7 @@ export default function ProductDetail() {
       const newItem = {
         ...product,
         product: product.id,
-        quantity: 1,
-        user: user.id,
+        quantity: 1
       };
       dispatch(addToCartAsync(newItem));
       // TODO: it will be based on server response of backend
