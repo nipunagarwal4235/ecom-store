@@ -6,7 +6,6 @@ import {
   selectUserOrders,
   selectUserInfoStatus,
 } from "../userSlice";
-import { discountedPrice } from "../../../app/constants";
 import { Grid } from "react-loader-spinner";
 
 export default function UserOrders() {
@@ -53,7 +52,7 @@ export default function UserOrders() {
                                   </a>
                                 </h3>
                                 <p className="ml-4">
-                                  ${discountedPrice(item.product)}
+                                  ${item.product.discountPrice}
                                 </p>
                               </div>
                               <p className="mt-1 text-sm text-gray-500">

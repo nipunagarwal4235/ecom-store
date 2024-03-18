@@ -8,25 +8,24 @@ import {
   updateCartAsync,
 } from "./cartSlice";
 import { Link, Navigate } from "react-router-dom";
-import { discountedPrice } from "../../app/constants";
 import { Grid } from "react-loader-spinner";
 import Modal from "../common/Modal";
 
 export default function Cart() {
   const dispatch = useDispatch();
   const items = useSelector(selectItems);
-  const cartLoaded = useSelector(selectCartLoaded)
+  const cartLoaded = useSelector(selectCartLoaded);
   const status = useSelector(selectCartStatus);
   const [openModal, setOpenModal] = useState(null);
 
   const totalAmount = items.reduce(
-    (amount, item) => discountedPrice(item.product) * item.quantity + amount,
+    (amount, item) => item.product.discountedPrice * item.quantity + amount,
     0
   );
   const totalItems = items.reduce((total, item) => item.quantity + total, 0);
 
   const handleQuantity = (e, item) => {
-    dispatch(updateCartAsync({ id:item.id, quantity: +e.target.value }));
+    dispatch(updateCartAsync({ id: item.id, quantity: +e.target.value }));
   };
 
   const handleRemove = (e, id) => {
@@ -35,7 +34,9 @@ export default function Cart() {
 
   return (
     <>
-      {!items.length && cartLoaded && <Navigate to="/" replace={true}></Navigate>}
+      {!items.length && cartLoaded && (
+        <Navigate to="/" replace={true}></Navigate>
+      )}
       <div>
         <div className="mx-auto mt-12 bg-white max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="border-t border-gray-200 px-4 py-6 sm:px-6">
@@ -71,7 +72,9 @@ export default function Cart() {
                           <h3>
                             <a href={item.product.id}>{item.product.title}</a>
                           </h3>
-                          <p className="ml-4">${discountedPrice(item.product)}</p>
+                          <p className="ml-4">
+                            ${item.product.discountedPrice}
+                          </p>
                         </div>
                         <p className="mt-1 text-sm text-gray-500">
                           {item.product.brand}

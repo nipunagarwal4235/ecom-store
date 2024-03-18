@@ -25,6 +25,7 @@ import UserProfilePage from "./pages/UserProfilePage";
 import Logout from "./features/auth/components/Logout";
 import ForgotPasswordPage from "./pages/ForgotPasswordPage";
 import StripeCheckout from "./pages/StripeCheckout";
+import ResetPasswordPage from "./pages/ResetPasswordPage";
 
 import ProtectedAdmin from "./features/auth/components/ProtectedAdmin";
 import AdminHome from "./pages/AdminHome";
@@ -32,6 +33,7 @@ import AdminProductDetailPage from "./pages/AdminProductDetailPage";
 import AdminProductFormPage from "./pages/AdminProductFormPage";
 import AdminOrdersPage from "./pages/AdminOrdersPage";
 import AlertTemplate from "react-alert-template-basic";
+
 const options = {
   timeout: 5000,
   position: positions.BOTTOM_LEFT,
@@ -157,6 +159,10 @@ const router = createBrowserRouter([
         <AdminOrdersPage></AdminOrdersPage>
       </ProtectedAdmin>
     ),
+  },
+  {
+    path: "/reset-password",
+    element: <ResetPasswordPage></ResetPasswordPage>,
   },
   {
     path: "*",

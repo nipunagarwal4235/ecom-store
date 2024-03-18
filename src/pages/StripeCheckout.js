@@ -26,6 +26,8 @@ export default function StripeCheckout() {
       body: JSON.stringify({
         totalAmount: currentOrder.totalAmount,
         orderId: currentOrder.id,
+        name: currentOrder.selectedAddress.name,
+        address: currentOrder.selectedAddress,
       }),
     })
       .then((res) => res.json())
